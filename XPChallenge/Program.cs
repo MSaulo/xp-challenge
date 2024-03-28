@@ -40,7 +40,8 @@ builder.Services.AddHangfire(config => config
             BackupStrategy = new CollectionMongoBackupStrategy()
         },
         Prefix = "hangfire.mongo",
-        CheckConnection = true
+        CheckConnection = true,
+        CheckQueuedJobsStrategy = CheckQueuedJobsStrategy.TailNotificationsCollection
     })
 );
 
@@ -63,7 +64,7 @@ app.UseAuthorization();
 app.UseHangfireDashboard();
 app.UseHangfireServer();
 
-RecurringJob.AddOrUpdate<FinancialProductService>(x => x.GetWillExpiresFinancialProducts(), Cron.Daily);
+RecurringJob.AddOrUpdate<FinancialProductService>(x => x.NotifyExpirationSoon(), Cron.Daily(10));
 
 app.MapControllers();
 

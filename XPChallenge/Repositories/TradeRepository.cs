@@ -6,7 +6,7 @@ using XPChallenge.Services;
 
 namespace XPChallenge.Repositories {
     public class TradeRepository : IBaseRepository<Trade> {
-        private readonly string _scope = "customers";
+        private readonly string _scope = "trades";
         private readonly IMongoCollection<Trade> _collection;
 
         public TradeRepository(MongoService mongo) {

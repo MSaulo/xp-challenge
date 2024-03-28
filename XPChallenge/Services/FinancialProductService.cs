@@ -15,7 +15,7 @@ namespace XPChallenge.Services {
             return await _repository.GetAllWillExpiresAsync();
         }
 
-        public async void NotifyExpirationSoon() {
+        public async Task NotifyExpirationSoon() {
             var expiringProducts = await GetWillExpiresFinancialProducts();
             if (expiringProducts.Any()) {
                 var emailBody = GenerateEmailBody(expiringProducts);
@@ -26,7 +26,7 @@ namespace XPChallenge.Services {
         private static string GenerateEmailBody(IEnumerable<FinancialProduct> products) {
             var sb = new StringBuilder();
 
-            sb.AppendLine("The following financial products are expiring soon:");
+            sb.AppendLine("The following financial products will are expiring soon:");
             foreach (var product in products) {
                 sb.AppendLine($"- {product.Name} (Expires in: {product.ExpiryDate:dd/MM/yyyy})");
             }
